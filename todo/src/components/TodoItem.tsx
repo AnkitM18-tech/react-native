@@ -43,7 +43,8 @@ const TodoItem: React.FC<TodoItemProps> = ({
       <View style={styles.btnContainer}>
         <TouchableOpacity
           onPress={() => setIsEditing(true)}
-          style={styles.editBtn}>
+          style={styles.editBtn}
+          disabled={todo.completed}>
           <Text style={styles.btnText}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.deleteBtn} onPress={onDelete}>
