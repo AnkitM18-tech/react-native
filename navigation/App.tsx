@@ -1,11 +1,12 @@
-import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import {StyleSheet, Text, View} from 'react-native';
+import RootNavigator from './src/RootNavigator';
 
 function App(): React.JSX.Element {
   return (
-    <View style={styles.container}>
-      <Text style={styles.headerText}>Navigation in React Native</Text>
-    </View>
+    <NavigationContainer>
+      <RootNavigator />
+    </NavigationContainer>
   );
 }
 
