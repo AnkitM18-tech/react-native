@@ -16,6 +16,10 @@ const HomeScreen: React.FC = () => {
         onPress={() => navigation.navigate('StackDemo')}
         title="Stack Navigation Demo"
       />
+      <Button
+        onPress={() => navigation.navigate('TabDemo')}
+        title="Tab Navigation Demo"
+      />
     </View>
   );
 };
@@ -26,6 +30,7 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    gap: 20,
   },
   headerText: {
     marginTop: 20,
