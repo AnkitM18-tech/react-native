@@ -1,6 +1,5 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../RootNavigator';
 
@@ -10,20 +9,35 @@ const topics = [
     title: 'Flat List',
     screen: 'FlatListScreen',
   },
+  {
+    id: 2,
+    title: 'Section List',
+    screen: 'SectionListScreen',
+  },
 ];
 
 type HomeScreenNavigationProps = StackNavigationProp<
   RootStackParamsList,
   'Home'
 >;
-const HomeScreen = () => {
-  const navigation = useNavigation<HomeScreenNavigationProps>();
+
+type Props = {
+  navigation: HomeScreenNavigationProps;
+};
+const HomeScreen: React.FC<Props> = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>HomeScreen</Text>
-      <Button
-        title="Flat List Demo"
-        onPress={() => navigation.navigate('FlatListScreen')}
+      <FlatList
+        data={topics}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            style={styles.topicBtn}
+            onPress={() =>
+              navigation.navigate(item.screen as keyof RootStackParamsList)
+            }>
+            <Text style={styles.topicText}>{item.title}</Text>
+          </TouchableOpacity>
+        )}
       />
     </View>
   );
@@ -34,15 +48,19 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     padding: 20,
     gap: 10,
   },
-  headerText: {
-    marginTop: 20,
-    fontSize: 25,
-    fontWeight: 'bold',
+  topicBtn: {
+    backgroundColor: '#3a3dff',
+    padding: 10,
+    margin: 8,
+    borderRadius: 50,
+  },
+  topicText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '500',
     textAlign: 'center',
   },
 });
