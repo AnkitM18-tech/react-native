@@ -24,6 +24,11 @@ const topics = [
     title: 'Modal',
     screen: 'ModalScreen',
   },
+  {
+    id: 5,
+    title: 'PullToRefresh',
+    screen: 'PullToRefreshScreen',
+  },
 ];
 
 type HomeScreenNavigationProps = StackNavigationProp<

@@ -4,6 +4,7 @@ import FlatListScreen from './screens/FlatListScreen';
 import SectionListScreen from './screens/SectionListScreen';
 import TouchableScreen from './screens/TouchableScreen';
 import ModalScreen from './screens/ModalScreen';
+import PullToRefreshScreen from './screens/PullToRefreshScreen';
 
 export type RootStackParamsList = {
   Home: undefined;
@@ -11,6 +12,7 @@ export type RootStackParamsList = {
   SectionListScreen: undefined;
   TouchableScreen: undefined;
   ModalScreen: undefined;
+  PullToRefreshScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamsList>();
@@ -22,6 +24,10 @@ const RootNavigator: React.FC = () => {
       <Stack.Screen name="SectionListScreen" component={SectionListScreen} />
       <Stack.Screen name="TouchableScreen" component={TouchableScreen} />
       <Stack.Screen name="ModalScreen" component={ModalScreen} />
+      <Stack.Screen
+        name="PullToRefreshScreen"
+        component={PullToRefreshScreen}
+      />
     </Stack.Navigator>
   );
 };
