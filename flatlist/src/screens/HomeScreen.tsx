@@ -14,6 +14,11 @@ const topics = [
     title: 'Section List',
     screen: 'SectionListScreen',
   },
+  {
+    id: 3,
+    title: 'Touchable',
+    screen: 'TouchableScreen',
+  },
 ];
 
 type HomeScreenNavigationProps = StackNavigationProp<
