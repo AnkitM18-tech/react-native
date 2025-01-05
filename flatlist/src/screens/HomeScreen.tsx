@@ -29,6 +29,16 @@ const topics = [
     title: 'PullToRefresh',
     screen: 'PullToRefreshScreen',
   },
+  {
+    id: 6,
+    title: 'Fetch',
+    screen: 'FetchScreen',
+  },
+  {
+    id: 7,
+    title: 'Axios',
+    screen: 'AxiosScreen',
+  },
 ];
 
 type HomeScreenNavigationProps = StackNavigationProp<
