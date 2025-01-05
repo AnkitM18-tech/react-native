@@ -113,6 +113,31 @@ const AnimationScreen = () => {
     ]).start();
   };
 
+  const interpolateAnimation = useRef(new Animated.Value(0)).current;
+  const startInterpolateAnimation = () => {
+    Animated.timing(interpolateAnimation, {
+      toValue: 1,
+      duration: 2500,
+      useNativeDriver: false,
+    }).start(() => interpolateAnimation.setValue(0));
+  };
+  const backgroundColor = interpolateAnimation.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: ['#e01818', '#1616e2', '#12e214'],
+  });
+  const interpolateRotate = interpolateAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+  const borderRadius = interpolateAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [4, 100],
+  });
+  const size = interpolateAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [100, 200],
+  });
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.headerText}>Basic Animations</Text>
@@ -233,6 +258,23 @@ const AnimationScreen = () => {
           <Button onPress={bounce} title="Bounce" />
         </View>
       </View>
+
+      {/* Interpolation */}
+      <Text style={styles.headerText}>Interpolation</Text>
+      <Animated.View
+        style={[
+          styles.box,
+          {
+            backgroundColor,
+            borderRadius,
+            width: size,
+            height: size,
+            transform: [{rotate: interpolateRotate}],
+          },
+        ]}>
+        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Interpolate Me!</Text>
+      </Animated.View>
+      <Button onPress={startInterpolateAnimation} title="Start Animation" />
     </ScrollView>
   );
 };
