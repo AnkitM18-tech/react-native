@@ -83,6 +83,18 @@ const AnimationScreen = () => {
     outputRange: ['0deg', '360deg'],
   });
 
+  const springAnimation = useRef(new Animated.Value(0)).current;
+  const spring = () => {
+    Animated.spring(springAnimation, {
+      toValue: 100,
+      friction: 5,
+      tension: 40,
+      useNativeDriver: true,
+    }).start(() => {
+      springAnimation.setValue(0);
+    });
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.headerText}>Basic Animations</Text>
@@ -163,6 +175,26 @@ const AnimationScreen = () => {
           <Button onPress={rotate} title="Rotate" />
         </View>
       </View>
+
+      {/* Spring Animation */}
+      <Text style={styles.headerText}>Spring Animation</Text>
+      <View style={styles.demoContainer}>
+        <Animated.View
+          style={[
+            styles.box,
+            styles.springBox,
+            {
+              transform: [
+                {
+                  translateX: springAnimation,
+                },
+              ],
+            },
+          ]}></Animated.View>
+        <View style={styles.btnContainer}>
+          <Button onPress={spring} title="Spring" />
+        </View>
+      </View>
     </ScrollView>
   );
 };
@@ -222,5 +254,8 @@ const styles = StyleSheet.create({
   },
   rotateBox: {
     backgroundColor: '#ff10ff',
+  },
+  springBox: {
+    backgroundColor: '#30ff3e',
   },
 });
