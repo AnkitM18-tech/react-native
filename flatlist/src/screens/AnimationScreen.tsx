@@ -68,6 +68,21 @@ const AnimationScreen = () => {
     ]).start();
   };
 
+  const rotateAnimation = useRef(new Animated.Value(0)).current;
+  const rotate = () => {
+    Animated.timing(rotateAnimation, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start(() => {
+      rotateAnimation.setValue(0);
+    });
+  };
+  const spin = rotateAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.headerText}>Basic Animations</Text>
@@ -128,6 +143,26 @@ const AnimationScreen = () => {
           <Button onPress={scale} title="Scale" />
         </View>
       </View>
+
+      {/* Rotate Animation */}
+      <Text style={styles.headerText}>Rotate Animation</Text>
+      <View style={styles.demoContainer}>
+        <Animated.View
+          style={[
+            styles.box,
+            styles.rotateBox,
+            {
+              transform: [
+                {
+                  rotate: spin,
+                },
+              ],
+            },
+          ]}></Animated.View>
+        <View style={styles.btnContainer}>
+          <Button onPress={rotate} title="Rotate" />
+        </View>
+      </View>
     </ScrollView>
   );
 };
@@ -184,5 +219,8 @@ const styles = StyleSheet.create({
   },
   scaleBox: {
     backgroundColor: '#ffff10',
+  },
+  rotateBox: {
+    backgroundColor: '#ff10ff',
   },
 });
