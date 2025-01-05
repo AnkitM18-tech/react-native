@@ -1,6 +1,7 @@
 import {
   Animated,
   Button,
+  Easing,
   ScrollView,
   StyleSheet,
   Text,
@@ -24,11 +25,39 @@ const AnimationScreen = () => {
       useNativeDriver: true,
     }).start();
   };
+
+  const translateAnimation = useRef(new Animated.Value(0)).current;
+  const translateX = () => {
+    Animated.timing(translateAnimation, {
+      toValue: 100,
+      duration: 1000,
+      easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      useNativeDriver: true,
+    }).start();
+  };
+  const translateNegX = () => {
+    Animated.timing(translateAnimation, {
+      toValue: -100,
+      duration: 1000,
+      easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      useNativeDriver: true,
+    }).start();
+  };
+  const reset = () => {
+    Animated.timing(translateAnimation, {
+      toValue: 0,
+      duration: 1000,
+      easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.headerText}>Basic Animations</Text>
+
       {/* Fade Animation */}
-      <Text style={styles.headerText}>Fade In and Fade Out</Text>
+      <Text style={styles.headerText}>Fade In and Fade Out Animation</Text>
       <View style={styles.demoContainer}>
         <Animated.View
           style={[
@@ -39,6 +68,28 @@ const AnimationScreen = () => {
         <View style={styles.btnContainer}>
           <Button onPress={fadeIn} title="Fade In" />
           <Button onPress={fadeOut} title="Fade Out" />
+        </View>
+      </View>
+
+      {/* Transaltion Animation */}
+      <Text style={styles.headerText}>Translation Animation</Text>
+      <View style={styles.demoContainer}>
+        <Animated.View
+          style={[
+            styles.box,
+            styles.translateBox,
+            {
+              transform: [
+                {
+                  translateX: translateAnimation,
+                },
+              ],
+            },
+          ]}></Animated.View>
+        <View style={styles.btnContainer}>
+          <Button onPress={translateX} title="Translate +X" />
+          <Button onPress={reset} title="Reset" />
+          <Button onPress={translateNegX} title="Translate -X" />
         </View>
       </View>
     </ScrollView>
@@ -57,7 +108,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 20,
-    fontWeight: '500',
+    fontWeight: 'bold',
   },
   demoContainer: {
     alignItems: 'center',
@@ -91,5 +142,8 @@ const styles = StyleSheet.create({
   },
   fadeBox: {
     backgroundColor: '#3498db',
+  },
+  translateBox: {
+    backgroundColor: '#ff0310',
   },
 });
