@@ -95,6 +95,24 @@ const AnimationScreen = () => {
     });
   };
 
+  const bounceAnimation = useRef(new Animated.Value(0)).current;
+  const bounce = () => {
+    Animated.sequence([
+      Animated.spring(bounceAnimation, {
+        toValue: -20,
+        friction: 5,
+        tension: 30,
+        useNativeDriver: true,
+      }),
+      Animated.spring(bounceAnimation, {
+        toValue: 0,
+        friction: 5,
+        tension: 30,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.headerText}>Basic Animations</Text>
@@ -195,6 +213,26 @@ const AnimationScreen = () => {
           <Button onPress={spring} title="Spring" />
         </View>
       </View>
+
+      {/* Bounce Animation */}
+      <Text style={styles.headerText}>Bounce Animation</Text>
+      <View style={styles.demoContainer}>
+        <Animated.View
+          style={[
+            styles.box,
+            styles.bounceBox,
+            {
+              transform: [
+                {
+                  translateY: bounceAnimation,
+                },
+              ],
+            },
+          ]}></Animated.View>
+        <View style={styles.btnContainer}>
+          <Button onPress={bounce} title="Bounce" />
+        </View>
+      </View>
     </ScrollView>
   );
 };
@@ -257,5 +295,8 @@ const styles = StyleSheet.create({
   },
   springBox: {
     backgroundColor: '#30ff3e',
+  },
+  bounceBox: {
+    backgroundColor: '#3033f3',
   },
 });
