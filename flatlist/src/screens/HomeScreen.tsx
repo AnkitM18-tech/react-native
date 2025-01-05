@@ -39,6 +39,11 @@ const topics = [
     title: 'Axios',
     screen: 'AxiosScreen',
   },
+  {
+    id: 8,
+    title: 'Themes',
+    screen: 'ThemeScreen',
+  },
 ];
 
 type HomeScreenNavigationProps = StackNavigationProp<
