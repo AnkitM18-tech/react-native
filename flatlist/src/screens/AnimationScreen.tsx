@@ -43,13 +43,29 @@ const AnimationScreen = () => {
       useNativeDriver: true,
     }).start();
   };
-  const reset = () => {
+  const resetTranslate = () => {
     Animated.timing(translateAnimation, {
       toValue: 0,
       duration: 1000,
       easing: Easing.bezier(0.25, 0.1, 0.25, 1),
       useNativeDriver: true,
     }).start();
+  };
+
+  const scaleAnimation = useRef(new Animated.Value(1)).current;
+  const scale = () => {
+    Animated.sequence([
+      Animated.timing(scaleAnimation, {
+        toValue: 2,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnimation, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+    ]).start();
   };
 
   return (
@@ -87,9 +103,29 @@ const AnimationScreen = () => {
             },
           ]}></Animated.View>
         <View style={styles.btnContainer}>
-          <Button onPress={translateX} title="Translate +X" />
-          <Button onPress={reset} title="Reset" />
           <Button onPress={translateNegX} title="Translate -X" />
+          <Button onPress={resetTranslate} title="Reset" />
+          <Button onPress={translateX} title="Translate +X" />
+        </View>
+      </View>
+
+      {/* Scale Animation */}
+      <Text style={styles.headerText}>Scale Animation</Text>
+      <View style={styles.demoContainer}>
+        <Animated.View
+          style={[
+            styles.box,
+            styles.scaleBox,
+            {
+              transform: [
+                {
+                  scale: scaleAnimation,
+                },
+              ],
+            },
+          ]}></Animated.View>
+        <View style={styles.btnContainer}>
+          <Button onPress={scale} title="Scale" />
         </View>
       </View>
     </ScrollView>
@@ -145,5 +181,8 @@ const styles = StyleSheet.create({
   },
   translateBox: {
     backgroundColor: '#ff0310',
+  },
+  scaleBox: {
+    backgroundColor: '#ffff10',
   },
 });
