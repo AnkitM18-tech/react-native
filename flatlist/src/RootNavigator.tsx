@@ -8,6 +8,7 @@ import PullToRefreshScreen from './screens/PullToRefreshScreen';
 import FetchScreen from './screens/FetchScreen';
 import AxiosScreen from './screens/AxiosScreen';
 import ThemeScreen from './screens/ThemeScreen';
+import AnimationScreen from './screens/AnimationScreen';
 
 export type RootStackParamsList = {
   Home: undefined;
@@ -19,6 +20,7 @@ export type RootStackParamsList = {
   FetchScreen: undefined;
   AxiosScreen: undefined;
   ThemeScreen: undefined;
+  AnimationScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamsList>();
@@ -37,6 +39,7 @@ const RootNavigator: React.FC = () => {
       <Stack.Screen name="FetchScreen" component={FetchScreen} />
       <Stack.Screen name="AxiosScreen" component={AxiosScreen} />
       <Stack.Screen name="ThemeScreen" component={ThemeScreen} />
+      <Stack.Screen name="AnimationScreen" component={AnimationScreen} />
     </Stack.Navigator>
   );
 };
