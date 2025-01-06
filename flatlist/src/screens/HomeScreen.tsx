@@ -49,6 +49,16 @@ const topics = [
     title: 'Animation',
     screen: 'AnimationScreen',
   },
+  {
+    id: 10,
+    title: 'CombinedAnimation',
+    screen: 'CombinedAnimationScreen',
+  },
+  {
+    id: 11,
+    title: 'GestureAnimation',
+    screen: 'GestureAnimationScreen',
+  },
 ];
 
 type HomeScreenNavigationProps = StackNavigationProp<
