@@ -14,6 +14,7 @@ import GestureAnimationScreen from './screens/GestureAnimationScreen';
 import ReanimatedScreen from './screens/ReanimatedScreen';
 import HomeScreen2 from './screens/HomeScreen2';
 import ReanimatedTypes from './screens/ReanimatedTypes';
+import ReanimatedGesturesScreen from './screens/ReanimatedGesturesScreen';
 
 export type RootStackParamsList = {
   Home: undefined;
@@ -31,6 +32,7 @@ export type RootStackParamsList = {
   GestureAnimationScreen: undefined;
   ReanimatedScreen: undefined;
   ReanimatedTypesScreen: undefined;
+  ReanimatedGesturesScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamsList>();
@@ -61,6 +63,10 @@ const RootNavigator: React.FC = () => {
       />
       <Stack.Screen name="ReanimatedScreen" component={ReanimatedScreen} />
       <Stack.Screen name="ReanimatedTypesScreen" component={ReanimatedTypes} />
+      <Stack.Screen
+        name="ReanimatedGesturesScreen"
+        component={ReanimatedGesturesScreen}
+      />
     </Stack.Navigator>
   );
 };

@@ -9,6 +9,11 @@ const topics = [
     title: 'Reanimated Animation Types',
     screen: 'ReanimatedTypesScreen',
   },
+  {
+    id: 2,
+    title: 'Reanimated Gestures',
+    screen: 'ReanimatedGesturesScreen',
+  },
 ];
 
 type HomeScreenNavigationProps = StackNavigationProp<
