@@ -59,6 +59,11 @@ const topics = [
     title: 'GestureAnimation',
     screen: 'GestureAnimationScreen',
   },
+  {
+    id: 12,
+    title: 'React Native Reanimated',
+    screen: 'ReanimatedScreen',
+  },
 ];
 
 type HomeScreenNavigationProps = StackNavigationProp<
