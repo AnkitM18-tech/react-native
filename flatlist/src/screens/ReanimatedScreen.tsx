@@ -1,5 +1,5 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
-import React, {useRef} from 'react';
+import React from 'react';
 import Animated, {
   cancelAnimation,
   Easing,
