@@ -15,6 +15,7 @@ import ReanimatedScreen from './screens/ReanimatedScreen';
 import HomeScreen2 from './screens/HomeScreen2';
 import ReanimatedTypes from './screens/ReanimatedTypes';
 import ReanimatedGesturesScreen from './screens/ReanimatedGesturesScreen';
+import ReanimatedFormValidationScreen from './screens/ReanimatedFormValidationScreen';
 
 export type RootStackParamsList = {
   Home: undefined;
@@ -33,6 +34,7 @@ export type RootStackParamsList = {
   ReanimatedScreen: undefined;
   ReanimatedTypesScreen: undefined;
   ReanimatedGesturesScreen: undefined;
+  ReanimatedFormValidationScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamsList>();
@@ -66,6 +68,10 @@ const RootNavigator: React.FC = () => {
       <Stack.Screen
         name="ReanimatedGesturesScreen"
         component={ReanimatedGesturesScreen}
+      />
+      <Stack.Screen
+        name="ReanimatedFormValidationScreen"
+        component={ReanimatedFormValidationScreen}
       />
     </Stack.Navigator>
   );
