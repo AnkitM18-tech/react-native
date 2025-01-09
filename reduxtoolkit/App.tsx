@@ -1,5 +1,4 @@
 import {NavigationContainer} from '@react-navigation/native';
-import {StyleSheet, Text, View} from 'react-native';
 import RootNavigation from './src/RootNavigation';
 import {Provider} from 'react-redux';
 import {store} from './src/store/store';
@@ -13,7 +12,5 @@ function App(): React.JSX.Element {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({});
 
 export default App;

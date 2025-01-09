@@ -12,7 +12,13 @@ import {
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../store/store';
-import {addTask, fetchTasks, deleteTask, Task} from '../store/taskListSlice';
+import {
+  addTask,
+  fetchTasks,
+  deleteTask,
+  Task,
+  toggleTask,
+} from '../store/taskListSlice';
 import Animated, {
   FadeInRight,
   FadeOutLeft,
@@ -59,12 +65,17 @@ const TaskList: React.FC = () => {
     ]);
   };
 
+  const toggleTaskItem = (taskId: string) => {
+    dispatch(toggleTask(taskId));
+  };
+
   const renderTasks = ({item}: {item: Task}) => (
     <Animated.View
       entering={FadeInRight}
       exiting={FadeOutLeft}
       layout={Layout.springify()}>
       <TouchableOpacity
+        onPress={() => toggleTaskItem(item.id)}
         style={[styles.task, item.completed && styles.completedTask]}>
         <Text
           style={[styles.taskText, item.completed && styles.completedTaskText]}>
@@ -72,7 +83,8 @@ const TaskList: React.FC = () => {
         </Text>
         <TouchableOpacity
           onPress={() => deleteTaskItem(item.id)}
-          style={styles.closeBtn}>
+          style={styles.closeBtn}
+          disabled={item.completed}>
           <Text style={styles.btnText}>Delete</Text>
         </TouchableOpacity>
       </TouchableOpacity>
