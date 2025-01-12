@@ -1,9 +1,15 @@
-import {StyleSheet, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import RootNavigator from './src/navigation/RootNavigator';
+import {AuthProvider} from './src/context/AuthContext';
 
 function App(): React.JSX.Element {
-  return <View></View>;
+  return (
+    <AuthProvider>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    </AuthProvider>
+  );
 }
-
-const styles = StyleSheet.create({});
 
 export default App;
