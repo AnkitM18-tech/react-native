@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {createContext, ReactNode, useState} from 'react';
 
@@ -37,7 +38,26 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
     }
   };
   const login = async (email: string, password: string): Promise<boolean> => {
-    return true;
+    try {
+      const result = await axios.post(`${API_URL}/api/auth/login`, {
+        email,
+        password,
+      });
+      const {token, userId, success} = result?.data;
+      if (success) {
+        await AsyncStorage.setItem('token', token);
+        setToken(token);
+        await AsyncStorage.setItem('userId', userId);
+        setUserId(userId);
+        return true;
+      } else return false;
+    } catch (error) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        console.log('Error : ', error.response?.data);
+      }
+      return false;
+    }
   };
   const signOut = async (): Promise<void> => {};
 
