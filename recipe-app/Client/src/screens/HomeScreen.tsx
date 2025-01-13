@@ -1,6 +1,7 @@
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import {
   Alert,
+  Modal,
   StyleSheet,
   Text,
   TextInput,
@@ -10,6 +11,7 @@ import {
 import {AuthContext} from '../context/AuthContext';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamsList} from '../navigation/RootNavigator';
+import CreateRecipeForm from '../components/CreateRecipeForm';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamsList,
@@ -21,6 +23,9 @@ interface HomeScreenProp {
 }
 
 const HomeScreen: React.FC<HomeScreenProp> = ({navigation}) => {
+  const [showModal, setShowModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
   const {signOut} = useContext(AuthContext);
   const logoutUser = () => {
     Alert.alert('Logout', 'Are you sure you want to logout?', [
@@ -41,8 +46,15 @@ const HomeScreen: React.FC<HomeScreenProp> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TextInput style={styles.input} placeholder="Search Recipes ..." />
-        <TouchableOpacity style={styles.iconBtn}>
+        <TextInput
+          style={styles.input}
+          placeholder="Search Recipes ..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <TouchableOpacity
+          onPress={() => setShowModal(true)}
+          style={styles.iconBtn}>
           <Text style={styles.iconBtnText}>+</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.logoutBtn} onPress={logoutUser}>
@@ -50,6 +62,13 @@ const HomeScreen: React.FC<HomeScreenProp> = ({navigation}) => {
         </TouchableOpacity>
       </View>
       {/* render all recipes */}
+      {/* Modal for creating new recipe */}
+      <Modal
+        animationType="slide"
+        visible={showModal}
+        onRequestClose={() => setShowModal(false)}>
+        <CreateRecipeForm onCancel={() => setShowModal(false)} />
+      </Modal>
     </View>
   );
 };
