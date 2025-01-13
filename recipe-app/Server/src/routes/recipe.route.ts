@@ -43,4 +43,28 @@ router.get("/get", authMiddleware, async (req: AuthRequest, res: Response) => {
   }
 });
 
+router.get(
+  "/get/:id",
+  authMiddleware,
+  async (req: AuthRequest, res: Response) => {
+    try {
+      const id = req.params.id;
+      const recipe = await Recipe.findOne({ _id: id, createdBy: req.userId });
+      if (!recipe) {
+        res.status(404).json({ success: false, message: "Recipe not found" });
+      }
+      res
+        .status(200)
+        .json({
+          success: true,
+          message: "Recipe fetched successfully",
+          data: recipe,
+        });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "Something went wrong" });
+    }
+  }
+);
+
 export default router;
