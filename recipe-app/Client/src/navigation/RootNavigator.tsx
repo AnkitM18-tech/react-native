@@ -1,8 +1,14 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
 import RecipeDetailsScreen from '../screens/RecipeDetailsScreen';
+import {useNavigation} from '@react-navigation/native';
+import {useContext, useEffect} from 'react';
+import {AuthContext} from '../context/AuthContext';
 
 export type RootStackParamsList = {
   Login: undefined;
@@ -12,7 +18,27 @@ export type RootStackParamsList = {
 };
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
+type NavigationProp = NativeStackNavigationProp<RootStackParamsList>;
 const RootNavigator: React.FC = () => {
+  const navigation = useNavigation<NavigationProp>();
+  const {isAuthenticated, isLoading} = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (isAuthenticated) {
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Home'}],
+        });
+      } else {
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Login'}],
+        });
+      }
+    }
+  }, [isLoading, isAuthenticated, navigation]);
+
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
