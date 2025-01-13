@@ -1,6 +1,7 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {
   Alert,
+  FlatList,
   Modal,
   StyleSheet,
   Text,
@@ -12,6 +13,8 @@ import {AuthContext} from '../context/AuthContext';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamsList} from '../navigation/RootNavigator';
 import CreateRecipeForm from '../components/CreateRecipeForm';
+import {Recipe, RecipeContext} from '../context/RecipeContext';
+import RecipeItem from '../components/RecipeItem';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamsList,
@@ -43,6 +46,19 @@ const HomeScreen: React.FC<HomeScreenProp> = ({navigation}) => {
       },
     ]);
   };
+
+  const {recipes, createRecipe, fetchRecipes} = useContext(RecipeContext);
+  const saveRecipe = async (
+    recipe: Omit<Recipe, '_id' | 'createdBy' | 'createdAt'>,
+  ) => {
+    createRecipe(recipe);
+    setShowModal(false);
+  };
+
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -62,12 +78,20 @@ const HomeScreen: React.FC<HomeScreenProp> = ({navigation}) => {
         </TouchableOpacity>
       </View>
       {/* render all recipes */}
+      <FlatList
+        data={recipes}
+        keyExtractor={item => item._id}
+        renderItem={({item}) => <RecipeItem recipe={item} />}
+      />
       {/* Modal for creating new recipe */}
       <Modal
         animationType="slide"
         visible={showModal}
         onRequestClose={() => setShowModal(false)}>
-        <CreateRecipeForm onCancel={() => setShowModal(false)} />
+        <CreateRecipeForm
+          onCancel={() => setShowModal(false)}
+          onSave={saveRecipe}
+        />
       </Modal>
     </View>
   );
