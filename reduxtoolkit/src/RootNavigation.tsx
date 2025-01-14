@@ -12,7 +12,8 @@ export type TabParamsList = {
 const Tab = createBottomTabNavigator<TabParamsList>();
 
 export type StackParamList = {
-  Todos: undefined;
+  Home: undefined;
+  TodoScreen: undefined;
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -33,7 +34,16 @@ export const RootTabNavigation: React.FC = () => {
 export const RootStackNavigation: React.FC = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Todos" component={TodoScreen} />
+      <Stack.Screen
+        name="Home"
+        component={Projects}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="TodoScreen"
+        component={TodoScreen}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
