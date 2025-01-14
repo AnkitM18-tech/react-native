@@ -61,6 +61,10 @@ const HomeScreen: React.FC<HomeScreenProp> = ({navigation}) => {
     await fetchRecipes();
   };
 
+  const filteredRecipes = recipes.filter(recipe =>
+    recipe.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
   useEffect(() => {
     fetchRecipes();
   }, []);
@@ -84,20 +88,29 @@ const HomeScreen: React.FC<HomeScreenProp> = ({navigation}) => {
         </TouchableOpacity>
       </View>
       {/* render all recipes */}
-      <FlatList
-        data={recipes}
-        keyExtractor={item => item._id}
-        renderItem={({item}) => (
-          <RecipeItem
-            onPressRecipe={() =>
-              navigation.navigate('RecipeDetails', {recipeId: item._id})
-            }
-            recipe={item}
-            currentUserId={userId}
-            onRecipeDelete={() => removeRecipe(item._id)}
-          />
-        )}
-      />
+      {filteredRecipes.length > 0 ? (
+        <FlatList
+          data={filteredRecipes}
+          keyExtractor={item => item._id}
+          renderItem={({item}) => (
+            <RecipeItem
+              onPressRecipe={() =>
+                navigation.navigate('RecipeDetails', {recipeId: item._id})
+              }
+              recipe={item}
+              currentUserId={userId}
+              onRecipeDelete={() => removeRecipe(item._id)}
+            />
+          )}
+        />
+      ) : (
+        <View
+          style={[styles.container, {alignItems: 'center', paddingTop: 20}]}>
+          <Text style={[styles.iconBtnText, {color: '#000'}]}>
+            No Recipe matches the Search Query ...
+          </Text>
+        </View>
+      )}
       {/* Modal for creating new recipe */}
       <Modal
         animationType="slide"
