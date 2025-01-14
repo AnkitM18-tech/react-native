@@ -49,17 +49,45 @@ router.get(
   async (req: AuthRequest, res: Response) => {
     try {
       const id = req.params.id;
-      const recipe = await Recipe.findOne({ _id: id, createdBy: req.userId });
+      const recipe = await Recipe.findOne({ _id: id });
       if (!recipe) {
         res.status(404).json({ success: false, message: "Recipe not found" });
       }
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Recipe fetched successfully",
-          data: recipe,
+      res.status(200).json({
+        success: true,
+        message: "Recipe fetched successfully",
+        data: recipe,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "Something went wrong" });
+    }
+  }
+);
+
+router.delete(
+  "/delete/:id",
+  authMiddleware,
+  async (req: AuthRequest, res: Response) => {
+    try {
+      const id = req.params.id;
+      const recipe = await Recipe.findOne({ _id: id, createdBy: req.userId });
+      if (!recipe) {
+        res.status(404).json({
+          success: false,
+          message: "Recipe not found",
         });
+      } else if (recipe.createdBy.toString() !== req.userId) {
+        res.status(403).json({
+          success: false,
+          message: "Don't have permission to delete this recipe",
+        });
+      }
+      await recipe?.deleteOne();
+      res.status(200).json({
+        success: true,
+        message: "Recipe deleted successfully",
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ success: false, message: "Something went wrong" });
